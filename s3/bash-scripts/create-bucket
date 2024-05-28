@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+echo "== delete bucket"
+
 
 # check for bucket name
 if [ -z "$1" ]; then
@@ -6,4 +8,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 BUCKET_NAME=$1
-aws s3api create-bucket --bucket $BUCKET_NAME --create-bucket-configuration="LocationConstraint=ca-central-1"
+
+# No need to specify endpoint URL as ap-south-1 is compatible with most region endpoints
+aws s3api create-bucket --bucket $BUCKET_NAME --create-bucket-configuration="LocationConstraint=ap-south-1" \
+--query Location \
+--output text

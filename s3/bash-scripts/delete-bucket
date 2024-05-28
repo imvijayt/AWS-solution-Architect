@@ -1,1 +1,12 @@
 #!/usr/bin/env bash
+echo "== delete bucket"
+
+# check for bucket name
+if [ -z "$1" ]; then
+    echo "No bucket name provided."
+    exit 1
+fi
+BUCKET_NAME=$1
+
+# No need to specify endpoint URL as ap-south-1 is compatible with most region endpoints
+aws s3api delete-bucket --bucket $BUCKET_NAME 
