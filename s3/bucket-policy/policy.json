@@ -1,0 +1,26 @@
+{
+    "Statement": [
+   
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::690201598145:root"
+        },
+        "Action": [
+          "s3:ListBucket"
+        ],
+        "Resource": "arn:aws:s3:::class-bucket-policy-2209"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::690201598145:root"
+        },
+        "Action": [
+          "s3:PutObject"
+        ],
+        "Resource": "arn:aws:s3:::class-bucket-policy-2209/*"
+      }
+    ]
+  }
+  
