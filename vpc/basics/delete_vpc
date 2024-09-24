@@ -8,6 +8,37 @@ else
  export VPC_ID="$1"
 fi
 
+
+
+#detach igw
+aws ec2 detach-internet-gateway \
+    --internet-gateway-id $IGW_ID \
+    --vpc-id $VPC_ID
+
+
+#delete IGW
+aws ec2 delete-internet-gateway \
+    --internet-gateway-id $IGW_ID
+
+
+# delete subnet
+
+aws ec2 delete-subnet \
+    --subnet-id $SUBNET_ID
+
+# disassociate subnet id to route table
+ASS_ID = $(aws ec2 describe-route-tables \
+    --route-table-ids $RT_ID \
+    --filters "Name=association.subnet-id,Values=$SUBNET_ID" \
+    --query "RouteTables[].Associations[?SubnetId=='$SUBNET_ID'].AssociationId" \
+    --output text
+)
+echo "ASS_ID: $ASS_ID"
+# delete a route table
+aws ec2 delete-route-table \
+    --route-table-id $RT_ID
+
+
 # delete vpc
 
 aws ec2 delete-vpc --vpc-id $VPC_ID
